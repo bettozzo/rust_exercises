@@ -14,7 +14,7 @@ fn find_equal<'a, 'b>(s1: &'a str, s2: &'b str) -> Option<(&'a str, &'b str)>{
 }
 
 fn lucky_slice<'a>(input_str:&'a str) ->Option<&'a str>{
-    let mut new_str =  String::new() ;
+    let mut new_str =  String::new();
     for _ in 0..input_str.len(){
         let random_number: u8 = rand::thread_rng().gen();
         new_str.push((random_number%(122-97+1) + 97) as char);
