@@ -31,5 +31,6 @@ fn main() {
     // main_es2();
     // main_es5();
     // main_es6();
-    main_es7();
+    // main_es7();
+    main_es8();
 }
