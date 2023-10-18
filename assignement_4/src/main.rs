@@ -29,6 +29,7 @@ use crate::es9::main_es9;
 fn main() {
     // main_es1();
     // main_es2();
-    main_es5();
+    // main_es5();
     // main_es6();
+    main_es7();
 }
