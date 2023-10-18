@@ -53,7 +53,6 @@ impl GetArea for Circle{
     }
 }
 
-
 struct Rectangle{
     top_left: Point,
     bottom_right: Point,
@@ -93,7 +92,6 @@ impl Add for Area{
     }
 }
 
-// ! aaaaaaaaaaaaaaaaaaaaaaaaaaa
 // impl Add for &dyn GetArea{
 //     type Output = Self;
 //     fn add(self, rhs: Self) -> Self::Output {
