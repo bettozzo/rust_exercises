@@ -12,9 +12,23 @@ pub mod es4;
 use crate::es4::*;
 
 pub mod es5;
-use crate::es5::*;
+use crate::es5::main_es5;
+
+pub mod es6;
+use crate::es6::main_es6;
+
+pub mod es7;
+use crate::es7::main_es7;
+
+pub mod es8;
+use crate::es8::main_es8;
+
+pub mod es9;
+use crate::es9::main_es9;
 
 fn main() {
     // main_es1();
-    main_es2();
+    // main_es2();
+    main_es5();
+    // main_es6();
 }
