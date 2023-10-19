@@ -101,13 +101,15 @@ impl Add<&dyn GetArea> for Area{
 
 fn sum_area(areas: &[&dyn GetArea]) -> Area{
     let mut area = Area::default();
-    for obj in areas{
-        area = area + *obj;
+    for shape in areas{
+        area = area + *shape;
     }
     return area;
 }
 
 pub fn main_es6(){
-    let areas = vec![Circle::default(), Circle::default()].as_slice();
-    println!("***Es 6\n{:?}", sum_area(areas).area);
+    let rect = &Rectangle::default();
+    let circle = &Circle::default();
+    let areas:Vec<&dyn GetArea> = vec![rect, circle];
+    println!("***Es 6\n{:?}", sum_area(areas.as_slice()).area);
 }
