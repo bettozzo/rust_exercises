@@ -92,24 +92,22 @@ impl Add for Area{
     }
 }
 
-// impl Add for &dyn GetArea{
-//     type Output = Self;
-//     fn add(self, rhs: Self) -> Self::Output {
-//         Self{
-//             area: self.get_area() + rhs.get_area()
-//         }
-//     }
-// }
+impl Add<&dyn GetArea> for Area{
+    type Output = Self;
+    fn add(self, rhs: &dyn GetArea) -> Self::Output {
+        self + rhs.get_area()
+    }
+}
 
-// fn sum_area(areas: &[&dyn GetArea]) -> Area{
-//     let area = Area::default();
-//     for obj in areas.iter(){
-//         area = area + obj;
-//     }
-//     return area;
-// }
+fn sum_area(areas: &[&dyn GetArea]) -> Area{
+    let mut area = Area::default();
+    for obj in areas{
+        area = area + *obj;
+    }
+    return area;
+}
 
 pub fn main_es6(){
-
-
+    let areas = vec![Circle::default(), Circle::default()].as_slice();
+    println!("***Es 6\n{:?}", sum_area(areas).area);
 }
