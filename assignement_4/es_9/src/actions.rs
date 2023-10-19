@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use crate::permission::Permission;
 
+#[derive(Debug, PartialEq, Eq)]
 pub struct Actions{
     pub action:String,
     pub permissions: HashMap<Permission, bool>

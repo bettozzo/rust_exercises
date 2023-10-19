@@ -1,8 +1,10 @@
-
+#![allow(dead_code, unused_imports)]
 pub mod actions;
 pub mod permission;
 pub mod role;
-// pub mod testing;
+pub mod testing;
+use std::collections::HashMap;
+
 use permission::Permission;
 use role::Role;
 use actions::Actions;
@@ -13,10 +15,11 @@ trait Auth{
     fn can_read(&self, string:&str) -> bool;
     fn can_execute(&self, string:&str) -> bool;
 }
-struct User{
-    name:String,
-    role:Role,
-    actions: Vec<Actions>
+#[derive(Debug, PartialEq, Eq)]
+pub struct User{
+    pub name:String,
+    pub role:Role,
+    pub actions: Vec<Actions>
 }
 
 impl Auth for User{
@@ -69,17 +72,63 @@ impl User{
     }
 }
 
-fn sudo_change_permissions(mut user: User, string:String, permission:Permission, value:bool){
+pub fn sudo_change_permissions(user: &mut User, string:String, permission:Permission, value:bool){
     match permission{
         Permission::READ => {
             if !user.can_read(string.as_str()){
-                user.actions.push(Actions::new(string, value, false, false));
+                let action = user.actions.iter_mut().find(|action| action.action == string);
+                match action {
+                    None => user.actions.push(Actions::new(string, value, false, false)),
+                    Some(a) => {
+                        a.permissions.insert(Permission::READ, true);
+                    }
+                };
             }
         },
-        // todo: what am i supposed to do???
-        _ => {}
+        Permission::WRITE => {
+            if !user.can_write(string.as_str()){
+                let action = user.actions.iter_mut().find(|action| action.action == string);
+                match action {
+                    None => user.actions.push(Actions::new(string, false, value, false)),
+                    Some(a) => {
+                        a.permissions.insert(Permission::WRITE, true);
+                    }
+                };
+            }
+        },
+        Permission::EXECUTE => {
+            if !user.can_execute(string.as_str()){
+                let action = user.actions.iter_mut().find(|action| action.action == string);
+                match action {
+                    None => user.actions.push(Actions::new(string, false, false, value)),
+                    Some(a) => {
+                        a.permissions.insert(Permission::EXECUTE, true);
+                    }
+                };
+            }
+        }
     }
 }
 fn main() {
-    println!("Hello, world!");
+    let mut user = create_guest_for_testing_sudo();
+    sudo_change_permissions(&mut user, "no permission".to_string(), Permission::WRITE, true);
+    println!(" VALORE: {}", *user.actions[0]
+                            .permissions
+                            .get(&Permission::WRITE)
+                            .expect("Key WRITE always present in action."))
+}
+
+fn create_guest_for_testing_sudo() -> User {
+    User {
+        name: "test sudo".to_string(),
+        role: Role::GUEST,
+        actions: vec! [Actions{
+            action: "no permission".to_string(),
+            permissions: HashMap::from([
+                (Permission::READ, false),
+                (Permission::WRITE, false),
+                (Permission::EXECUTE, false)
+            ])
+        }]
+    }
 }
