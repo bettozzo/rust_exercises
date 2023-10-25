@@ -1,3 +1,4 @@
+#![allow(dead_code, unused_imports)]
 pub mod es1;
 use es1::main_es1;
 pub mod es2;
@@ -15,10 +16,10 @@ use es7::main_es7;
 
 fn main() {
     main_es1();
-    main_es2();
-    main_es3();
-    main_es4();
-    main_es5();
-    main_es6();
-    main_es7();
+    // main_es2();
+    // main_es3();
+    // main_es4();
+    // main_es5();
+    // main_es6();
+    // main_es7();
 }
