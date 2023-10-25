@@ -15,8 +15,8 @@ pub mod es7;
 use es7::main_es7;
 
 fn main() {
-    main_es1();
-    // main_es2();
+    // main_es1();
+    main_es2();
     // main_es3();
     // main_es4();
     // main_es5();
