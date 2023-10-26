@@ -1,5 +1,5 @@
 use rand::{distributions::Alphanumeric, Rng, random};
-trait Populatable<'a>{
+trait Populatable{
     fn populate(&mut self);
 }
 
@@ -10,42 +10,45 @@ enum Category{
 }
 
 #[derive(Debug)]
-struct Book<'a>{
-    title: &'a str,
+struct Book{
+    title: String,
     cat: Category,
 }
-impl Default for Book<'_>{
+impl Default for Book{
     fn default() -> Self {
         let mut rng = rand::thread_rng();
-        let cat = match rng.gen_range(0..1) { // rand 0.8
+        let cat = match rng.gen_range(0..2) { // rand 0.8
             0 => Category::ARTICLE,
-            1 => Category::MAGAZINE,
-            _ => Category::ARTICLE
+            _ => Category::MAGAZINE
         };
 
-        //todo make random title
-        Self { title: "ciao", cat }
+        let mut title: String = String::new();
+        for _ in 0..10{
+            let random_char = rng.gen_range('a' as u8..'z' as u8) as char;
+            title.push(random_char);
+        }
+        Self { title, cat }
     }
 }
-impl<'a> Book<'a>{
+impl Book{
     fn default_with_cat(cat: Category) -> Self{
         let mut rng = rand::thread_rng();
         
         let mut title: String = String::new();
-        let random_char = rng.gen_range('a' as u8..'z' as u8) as char;
-        title.push(random_char);
-        
+        for _ in 0..10{
+            let random_char = rng.gen_range('a' as u8..'z' as u8) as char;
+            title.push(random_char);
+        }
 
-        
-        Self { title:title.as_str().clone(), cat }
+        Self { title, cat }
     }
 }
 
 #[derive(Debug, Default)]
-struct Library<'a>{
-    bookcases: [Vec<Book<'a>>; 10],
+struct Library{
+    bookcases: [Vec<Book>; 10],
 }
-impl<'a> Populatable<'a> for Library<'a>{
+impl Populatable for Library{
     fn populate(&mut self) {
         for bookcase in self.bookcases.iter_mut(){
             for _ in 0..10{
