@@ -50,7 +50,7 @@ pub fn main_es4(){
     task5.complete();
     tasks.tasks = vec![task1, task2, task3, task4, task5];
     for ts in tasks{
-        print!("{:?}", ts);
+        println!("{:?}", ts);
     }
     // println!("{:?}", tasks);
 }
