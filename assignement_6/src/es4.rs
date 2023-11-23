@@ -60,7 +60,7 @@ pub fn main_es4() {
     let illumination = PublicIllumination::new(&vec![light1, light2, light3, light4, light5]);
 
     println!("{:?}", illumination);
-    for light in illumination {
+    for light in illumination.into_iter() {
         println!("{:?}", light);
     }
 }
