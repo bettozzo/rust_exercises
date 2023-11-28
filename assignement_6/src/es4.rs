@@ -57,10 +57,10 @@ pub fn main_es4() {
     let light4 = PublicStreetLight::default();
     let light5 = PublicStreetLight::default();
 
-    let illumination = PublicIllumination::new(&vec![light1, light2, light3, light4, light5]);
+    let illumination = PublicIllumination::new(&[light1, light2, light3, light4, light5]);
 
     println!("{:?}", illumination);
-    for light in illumination.into_iter() {
+    for light in illumination {
         println!("{:?}", light);
     }
 }

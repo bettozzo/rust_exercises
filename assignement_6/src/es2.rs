@@ -34,10 +34,10 @@ struct CarDealer {
 impl CarDealer {
     fn new(cars: &[Car]) -> Self {
         let mut new_self = CarDealer { cars: Vec::new() };
-        for car in cars.into_iter() {
+        for car in cars.iter() {
             new_self.cars.push(Rc::new(RefCell::new(car.clone())));
         }
-        return new_self;
+        new_self
     }
     fn add_car(&mut self, car: Car) {
         self.cars.push(Rc::new(RefCell::new(car)));
@@ -54,7 +54,7 @@ impl CarDealer {
     }
     fn rent_user(&mut self, user: &mut User, model: String) {
         for car in self.cars.iter() {
-            if car.borrow().model == model && car.borrow().rent == false {
+            if car.borrow().model == model && !car.borrow().rent {
                 car.borrow_mut().rent = true;
                 user.maybe_car = Some(car.clone());
                 return;
@@ -88,7 +88,7 @@ impl User {
 pub fn main_es2() {
     let car1 = Car::default();
     let car2 = Car::new("ABC", 100, 100000);
-    let mut cardealer = CarDealer::new(&vec![car1, car2]);
+    let mut cardealer = CarDealer::new(&[car1, car2]);
     cardealer.print_cars();
 
     let car3 = Car::new("DFG", 100, 100000);

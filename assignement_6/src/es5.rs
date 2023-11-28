@@ -32,8 +32,7 @@ fn count_nodes<T: CompileTimeNode>() -> usize {
     if T::is_none() {
         return 0;
     }
-    let count = 1 + count_nodes::<T::LeftType>() + count_nodes::<T::RightType>();
-    return count;
+    1 + count_nodes::<T::LeftType>() + count_nodes::<T::RightType>()
 }
 
 pub fn main_es5() {

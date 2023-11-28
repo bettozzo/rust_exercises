@@ -31,7 +31,7 @@ impl FarmCell<Animals> {
         // println!("{:?}", self);
         match &self.next {
             Some(next_node) => {
-                next_node.borrow_mut().insert(&obj);
+                next_node.borrow_mut().insert(obj);
             }
             None => {
                 self.next = Some(Rc::new(RefCell::new(Self {
@@ -54,7 +54,7 @@ impl Sound for FarmCell<Animals> {
             }
             None => (),
         }
-        return output;
+        output
     }
 }
 
